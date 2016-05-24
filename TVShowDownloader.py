@@ -4,6 +4,7 @@ import requests
 import pickle
 from lxml import html
 import shutil
+import cfscrape
 
 CONFIG_FILE = "config.cfg"
 
@@ -90,7 +91,7 @@ def updatedownloadedfiles(show):
 
 
 if __name__ == '__main__':
-    session = requests.Session()
+    session = cfscrape.create_scraper()
     initfromcookies(session)
 
     for showname in parser.sections():
