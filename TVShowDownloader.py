@@ -31,7 +31,7 @@ def login(session):
     if isloggedin(session):
         return
 
-    session.post('http://speed.cd/take.login.php', data={
+    session.post('http://speed.cd/takelogin.php', data={
         'username': USER,
         'password': PASS
     })
