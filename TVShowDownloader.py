@@ -31,7 +31,15 @@ def login(session):
     if isloggedin(session):
         return
 
-    session.post('https://speed.cd/takeElogin.php', data={
+    response = session.get('https://speed.cd/login.php')
+    tree = html.fromstring(response.text)
+    login_url = tree.xpath('//form[@id="loginform"]/@action')
+
+    if login_url is None:
+        print 'some error occured in finding the login path'
+        return
+
+    session.post('https://speed.cd/' + login_url[0], data={
         'username': USER,
         'password': PASS
     })
