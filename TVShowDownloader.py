@@ -31,7 +31,7 @@ def login(session):
     if isloggedin(session):
         return
 
-    session.post('http://speed.cd/take.login.php', data={
+    session.post('https://speed.cd/takeElogin.php', data={
         'username': USER,
         'password': PASS
     })
@@ -42,23 +42,23 @@ def login(session):
 
 
 def isloggedin(session):
-    response = session.get('http://speed.cd/browse.php')
+    response = session.get('https://speed.cd/browse.php')
     return '/login.php' not in response.url
 
 
 def isAvailable(session, query):
-    response = session.get('http://speed.cd/browse.php?search=' + query)
+    response = session.get('https://speed.cd/browse.php?search=' + query)
 
     tree = html.fromstring(response.text)
     return not tree.xpath('//div[@id = "torrentTable"]/div/div[@class="boxContent"]/text()')
 
 def download(session, query):
-    response = session.get('http://speed.cd/browse.php?search=' + query)
+    response = session.get('https://speed.cd/browse.php?search=' + query)
 
     tree = html.fromstring(response.text)
     torrent = tree.xpath('//div[@id = "torrentTable"]//td/a/@href')[0]
 
-    r = session.get('http://speed.cd/'+torrent)
+    r = session.get('https://speed.cd/'+torrent)
     with open(query+'.torrent', 'wb') as f:
         f.write(r.content)
 
